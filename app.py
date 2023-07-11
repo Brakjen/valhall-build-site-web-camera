@@ -1,29 +1,13 @@
-import requests
+import utils
 
 import pandas as pd
 import streamlit as st
 
 from PIL import Image
-from bs4 import BeautifulSoup
 from streamlit_autorefresh import st_autorefresh
 
-# TODO: It it possible to get the timestamp for when the image was taken?
 
-
-def download_image() -> None:
-    """Download web camera image from hent-kamera."""
-    url = "https://hent-kamera.no/webkamera/1718_Valhall/K_1/K_1_000M.jpg"
-    r = requests.get(url)
-    with open("build_site.jpg", "wb") as f:
-        f.write(r.content)
-
-def get_capture_time() -> str:
-    """Get the Last modified timestamp one level up in the file system."""
-    url = "https://hent-kamera.no/webkamera/1718_Valhall/K_1"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, "html.parser")
-    data = pd.read_html(str(soup.find("table")))[0]
-    return data["Last modified"].iloc[2]
+REFRESH_EVERY_N_MINUTES = 10
 
 st.set_page_config(
     page_title="Valhall Build Site Web Camera",
@@ -31,35 +15,36 @@ st.set_page_config(
     page_icon=Image.open("akerbp_logo.png")
 )
 
-# Style for larger font size and center aligned text
-st.markdown("""
-<style>
-.big-font {
-    text-align: center;
-    font-size:100px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("<style>h2 {text-align: center;}</style>", unsafe_allow_html=True)
+# Apply some custom style formatting
+st.markdown(utils.CUSTOM_STYLE_BIG_FONT, unsafe_allow_html=True)
+st.markdown(utils.CUSTOM_STYLE_CENTERED_H2, unsafe_allow_html=True)
+st.markdown(utils.CUSTOM_STYLE_CENTERED_H3, unsafe_allow_html=True)
 
 # Start the autorefresh counter
 counter = st_autorefresh(
-    interval=1000 * 60 * 10,
+    interval=1000 * 60 * REFRESH_EVERY_N_MINUTES,
     limit=None,
     key="webcam-counter"
 )
 
-# Get current time and write title
-now = pd.Timestamp.now(tz="CET").strftime("%Y-%m-%d %H:%M:%S")
-st.markdown(f'<p class="big-font">Valhall Build Site Web Camera ({get_capture_time()})', unsafe_allow_html=True)
-st.markdown(f"## Last check for new image: {now}")
+# Add title and timestamps
+now = pd.Timestamp.now(tz="CET")
+next_query = (now + pd.Timedelta(minutes=REFRESH_EVERY_N_MINUTES)).replace(microsecond=0, tzinfo=None).strftime("%Y-%m-%d %H:%M")
+last_capture = utils.get_capture_time()
+
+st.markdown(f'<p class="big-font">Valhall Build Site Web Camera', unsafe_allow_html=True)
+st.markdown(f"## Image taken {last_capture}{utils.whitespace(40)}{utils.whitespace(40)}Next query {next_query}")
 
 # Try to fetch the latest image
 try:
-    download_image()
+    utils.download_image()
+
+    # Wrap in middle of three columns to emulate a centered image.
+    # It works-ish
     with st.columns((0.1, 0.8, 0.1))[1]:
         st.image("build_site.jpg", width=1920)
 except Exception:
     with st.columns((0.1, 0.8, 0.1))[1]:
         st.image("error.jpg", width=1920)
+
+st.markdown("### Deployed to [Streamlit Cloud](https://streamlit.io/cloud). Visit code on [Github](https://github.com/Brakjen/valhall-build-site-web-camera).")
