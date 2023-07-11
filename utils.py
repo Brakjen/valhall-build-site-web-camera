@@ -13,6 +13,7 @@ CUSTOM_STYLE_BIG_FONT = """
 
 CUSTOM_STYLE_CENTERED_H2 = "<style>h2 {text-align: center;}</style>"
 CUSTOM_STYLE_CENTERED_H3 = "<style>h3 {text-align: center;}</style>"
+CUSTOM_STYLE_CENTERED_H4 = "<style>h4 {text-align: center;}</style>"
 
 def download_image() -> None:
     """Download web camera image from hent-kamera."""

@@ -19,6 +19,7 @@ st.set_page_config(
 st.markdown(utils.CUSTOM_STYLE_BIG_FONT, unsafe_allow_html=True)
 st.markdown(utils.CUSTOM_STYLE_CENTERED_H2, unsafe_allow_html=True)
 st.markdown(utils.CUSTOM_STYLE_CENTERED_H3, unsafe_allow_html=True)
+st.markdown(utils.CUSTOM_STYLE_CENTERED_H4, unsafe_allow_html=True)
 
 # Start the autorefresh counter
 counter = st_autorefresh(
@@ -47,4 +48,4 @@ except Exception:
     with st.columns((0.1, 0.8, 0.1))[1]:
         st.image("error.jpg", width=1920)
 
-st.markdown("### Deployed to [Streamlit Cloud](https://streamlit.io/cloud). Visit code on [Github](https://github.com/Brakjen/valhall-build-site-web-camera).")
+st.markdown("### Visit this web-page at https://valhall-build-site-web-camera.streamlit.app/. Code on [Github](https://github.com/Brakjen/valhall-build-site-web-camera).")
