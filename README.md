@@ -7,4 +7,4 @@ The application is deployed to Streamlit Cloud:
 https://valhall-build-site-web-camera.streamlit.app/
 
 # Example image
-<img src="build_site.jpg" width="800">
+![Build Site Example Image](https://raw.githubusercontent.com/brakjen/valhall-build-site-web-camera/main/build_site.jpg)
