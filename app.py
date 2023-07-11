@@ -52,7 +52,7 @@ counter = st_autorefresh(
 )
 
 # Get current time and write title
-now = datetime.datetime.now(tz="CET").strftime("%Y-%m-%d %H:%M:%S")
+now = pd.Timestamp.now(tz="CET").strftime("%Y-%m-%d %H:%M:%S")
 st.markdown(f'<p class="big-font">Valhall Build Site Web Camera ({get_capture_time()})', unsafe_allow_html=True)
 st.markdown(f"## Last check for new image: {now}")
 
