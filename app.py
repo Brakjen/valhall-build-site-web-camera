@@ -32,6 +32,9 @@ st.set_page_config(
     page_icon=Image.open("akerbp_logo.png")
 )
 
+if "image" not in st.session_state:
+    st.session.state["image"] = None
+
 # Style for larger font size and center aligned text
 st.markdown("""
 <style>
@@ -46,7 +49,7 @@ st.markdown("<style>h2 {text-align: center;}</style>", unsafe_allow_html=True)
 
 # Start the autorefresh counter
 counter = st_autorefresh(
-    interval=10 * 1000,
+    interval=1000 * 60 * 10,
     limit=None,
     key="webcam-counter"
 )
