@@ -60,7 +60,7 @@ st.markdown(f"## Last check for new image: {now}")
 try:
     download_image()
     with st.columns((0.1, 0.8, 0.1))[1]:
-        st.image("build_site.jpg", width=1920 * 2)
+        st.image("build_site.jpg", width=1920)
 except Exception:
     with st.columns((0.1, 0.8, 0.1))[1]:
         st.image("error.jpg", width=1920)
