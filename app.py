@@ -32,9 +32,6 @@ st.set_page_config(
     page_icon=Image.open("akerbp_logo.png")
 )
 
-if "image" not in st.session_state:
-    st.session.state["image"] = None
-
 # Style for larger font size and center aligned text
 st.markdown("""
 <style>
